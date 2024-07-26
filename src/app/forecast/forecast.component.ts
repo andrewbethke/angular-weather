@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { ForecastErrorComponent } from './forecast-error/forecast-error.component';
+import { ForecastRetrieverService } from './forecast-retriever.service';
 
 @Component({
   selector: 'app-forecast',
@@ -10,8 +12,11 @@ import { ForecastErrorComponent } from './forecast-error/forecast-error.componen
 })
 export class ForecastComponent {
   error: string = "";
+  forecastRetriever: ForecastRetrieverService;
 
-  constructor() {
+  constructor(forecastRetriever: ForecastRetrieverService) {
+    this.forecastRetriever = forecastRetriever;
+
     if (navigator.geolocation){
       navigator.geolocation.getCurrentPosition(this.loadForecast.bind(this), this.handleGeolocationError.bind(this));
     } else {
@@ -39,5 +44,7 @@ export class ForecastComponent {
   loadForecast(location: GeolocationPosition){
     // TODO: Implement dynamic forecast loading.
     console.log(location);
+    this.forecastRetriever.retrieveForecast(location.coords.latitude, location.coords.longitude);
+    setTimeout(() => {console.log(this.forecastRetriever.getForecastInfo())}, 1000);
   }
 }
