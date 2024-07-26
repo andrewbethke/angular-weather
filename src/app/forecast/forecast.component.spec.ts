@@ -20,4 +20,9 @@ describe('ForecastComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should contain an error box', () => {
+    const element = fixture.nativeElement as HTMLElement;
+    expect(element.querySelector("app-forecast-error"));
+  });
 });

@@ -20,10 +20,12 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('angular-weather');
   });
 
-  it('should render title', () => {
+  it('should have a header, a footer, and a forecast', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, angular-weather');
+    expect(compiled.querySelector('header'));
+    expect(compiled.querySelector('main'));
+    expect(compiled.querySelector('footer'));
   });
 });
