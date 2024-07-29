@@ -1,7 +1,16 @@
 $main-blue: #4080c0;
 
 main {
+    width: 100vw;
+    overflow-x: scroll;
     min-height: calc(100vh - 6rem);
-    background-color: skyblue;
-    z-index: -100;
+    background-color: $main-blue;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10vw;
+}
+
+app-forecast-card:first-child {
+    margin-left: 40vw;
 }

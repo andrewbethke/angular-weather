@@ -1,23 +1,30 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
+import { ForecastLoaderComponent } from './forecast-loader/forecast-loader.component';
 import { ForecastErrorComponent } from './forecast-error/forecast-error.component';
 import { ForecastRetrieverService } from './forecast-retriever.service';
 
 @Component({
   selector: 'app-forecast',
   standalone: true,
-  imports: [ForecastErrorComponent],
+  imports: [ForecastErrorComponent, ForecastLoaderComponent],
   templateUrl: './forecast.component.html',
   styleUrl: './forecast.component.scss'
 })
 export class ForecastComponent {
   error: string = "";
   forecastRetriever: ForecastRetrieverService;
+  viewContainer: ViewContainerRef;
 
-  constructor(forecastRetriever: ForecastRetrieverService) {
+  @ViewChild(ForecastLoaderComponent)
+  loader!: ForecastLoaderComponent;
+
+  constructor(forecastRetriever: ForecastRetrieverService, viewContainer: ViewContainerRef) {
     this.forecastRetriever = forecastRetriever;
+    this.viewContainer = viewContainer;
+  }
 
-    if (navigator.geolocation){
+  ngAfterViewInit() {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.loadForecast.bind(this), this.handleGeolocationError.bind(this));
     } else {
       this.error = "Your browser does not support geolocation, which is required for this application. Try a more modern browser.";
@@ -41,10 +48,7 @@ export class ForecastComponent {
     }
   }
 
-  loadForecast(location: GeolocationPosition){
-    // TODO: Implement dynamic forecast loading.
-    console.log(location);
-    this.forecastRetriever.retrieveForecast(location.coords.latitude, location.coords.longitude);
-    setTimeout(() => {console.log(this.forecastRetriever.getForecastInfo())}, 1000);
+  loadForecast(location: GeolocationPosition) {
+    this.loader.loadForecast(location);
   }
 }
