@@ -1,5 +1,5 @@
 <main>
     <noscript>To use this application, Javascript must be enabled.</noscript>
-    <app-forecast-error [message]="error" ></app-forecast-error>
+    <app-forecast-error [messenger]="error.asObservable()" ></app-forecast-error>
     <app-forecast-loader></app-forecast-loader>
 </main>

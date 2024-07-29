@@ -2,6 +2,7 @@ import { Component, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/
 import { ForecastLoaderComponent } from './forecast-loader/forecast-loader.component';
 import { ForecastErrorComponent } from './forecast-error/forecast-error.component';
 import { ForecastRetrieverService } from './forecast-retriever.service';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-forecast',
@@ -11,7 +12,7 @@ import { ForecastRetrieverService } from './forecast-retriever.service';
   styleUrl: './forecast.component.scss'
 })
 export class ForecastComponent {
-  error: string = "";
+  error: Subject<string> = new BehaviorSubject("");
   forecastRetriever: ForecastRetrieverService;
   viewContainer: ViewContainerRef;
 
@@ -27,23 +28,23 @@ export class ForecastComponent {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.loadForecast.bind(this), this.handleGeolocationError.bind(this));
     } else {
-      this.error = "Your browser does not support geolocation, which is required for this application. Try a more modern browser.";
+      this.error.next("Your browser does not support geolocation, which is required for this application. Try a more modern browser.");
     }
   }
 
   handleGeolocationError(err: GeolocationPositionError) {
     switch (err.code) {
       case err.PERMISSION_DENIED:
-        this.error = "You denied the geolocation request! Please allow this website to retrieve your location.";
+        this.error.next("You denied the geolocation request! Please allow this website to retrieve your location.");
         break;
       case err.POSITION_UNAVAILABLE:
-        this.error = "Location information is unavailable. Check your browser location settings.";
+        this.error.next("Location information is unavailable. Check your browser location settings.");
         break;
       case err.TIMEOUT:
-        this.error = "The request to get your location timed out. Please try again.";
+        this.error.next("The request to get your location timed out. Please try again.");
         break;
       default:
-        this.error = "An unknown error occurred. Please try again.";
+        this.error.next("An unknown error occurred. Please try again.");
         break;
     }
   }

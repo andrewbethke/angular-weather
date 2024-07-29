@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-forecast-error',
@@ -8,5 +9,11 @@ import { Component, Input } from '@angular/core';
   styleUrl: './forecast-error.component.scss'
 })
 export class ForecastErrorComponent {
-  @Input() message: string = "";
+  @Input() messenger: Observable<string> = new Observable<string>();
+  message: string = "";
+
+  constructor() {
+    this.messenger.subscribe((message) => {this.message = message});
+  }
+  
 }
