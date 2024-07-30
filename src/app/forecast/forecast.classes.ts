@@ -29,7 +29,7 @@ export class NWSElevation {
     qualityControl: string = "";
 }
 
-export class NWSForecastComponent {
+export class NWSQuantitativeValue {
     value: number = 0;
     maxValue: number = 0;
     minValue: number = 0;
@@ -43,11 +43,11 @@ export class NWSForecastPeriod {
     startTime: string = "";
     endTime: string = "";
     isDaytime: boolean = false;
+    temperature: NWSQuantitativeValue = new NWSQuantitativeValue();
     temperatureTrend: string = "";
-    probabilityOfPrecipitation: NWSForecastComponent = new NWSForecastComponent();
-    dewpoint: NWSForecastComponent = new NWSForecastComponent();
-    relativeHumidity: NWSForecastComponent = new NWSForecastComponent();
+    probabilityOfPrecipitation: NWSQuantitativeValue = new NWSQuantitativeValue();
     windDirection: string = "";
+    windSpeed: NWSQuantitativeValue = new NWSQuantitativeValue();
     shortForecast: string = "";
     detailedForecast: string = "";
 }

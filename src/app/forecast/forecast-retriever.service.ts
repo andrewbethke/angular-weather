@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NWSLocation, NWSForecast } from './forecast.classes';
 import { Observable } from 'rxjs';
@@ -16,7 +16,7 @@ export class ForecastRetrieverService {
   }
 
   retrieveForecast(location: NWSLocation): Observable<NWSForecast> {
-    let request: Observable<NWSForecast> = this.http.get<NWSForecast>(location.properties.forecast);
+    let request: Observable<NWSForecast> = this.http.get<NWSForecast>(location.properties.forecast, {"headers": new HttpHeaders({"Feature-Flags": ["forecast_temperature_qv", "forecast_wind_speed_qv"]})});
     request.subscribe(forecast => {
       this.forecast = forecast;
     });
