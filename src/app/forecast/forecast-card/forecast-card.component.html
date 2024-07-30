@@ -1,4 +1,4 @@
-<div [ngClass]="{'daytime': day, 'nighttime': !day}">
-    <h2>{{name}}</h2>
-    <p>{{forecastText}}</p>
+<div [ngClass]="{'daytime': period.isDaytime, 'nighttime': !period.isDaytime}">
+    <h2>{{period.name}}</h2>
+    <p>{{period.detailedForecast}}</p>
 </div>

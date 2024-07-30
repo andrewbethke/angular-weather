@@ -15,5 +15,4 @@ export class ForecastErrorComponent {
   constructor() {
     this.messenger.subscribe((message) => {this.message = message});
   }
-  
 }

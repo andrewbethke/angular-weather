@@ -2,15 +2,29 @@ $main-blue: #4080c0;
 
 main {
     width: 100vw;
-    overflow-x: scroll;
     min-height: calc(100vh - 6rem);
+    height: fit-content;
+    overflow-x: scroll;
     background-color: $main-blue;
+}
+
+app-forecast-error {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+ol {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10vw;
 }
 
-app-forecast-card:first-child {
+li:first-child {
     margin-left: 40vw;
 }

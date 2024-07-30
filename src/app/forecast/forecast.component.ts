@@ -1,27 +1,25 @@
-import { Component, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
-import { ForecastLoaderComponent } from './forecast-loader/forecast-loader.component';
+import { Component } from '@angular/core';
 import { ForecastErrorComponent } from './forecast-error/forecast-error.component';
 import { ForecastRetrieverService } from './forecast-retriever.service';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { NWSForecast, NWSLocation } from './forecast.classes';
+import { ForecastCardComponent } from './forecast-card/forecast-card.component';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-forecast',
   standalone: true,
-  imports: [ForecastErrorComponent, ForecastLoaderComponent],
+  imports: [ForecastErrorComponent, ForecastCardComponent, NgFor],
   templateUrl: './forecast.component.html',
   styleUrl: './forecast.component.scss'
 })
 export class ForecastComponent {
   error: Subject<string> = new BehaviorSubject("");
   forecastRetriever: ForecastRetrieverService;
-  viewContainer: ViewContainerRef;
+  forecast: NWSForecast = new NWSForecast();
 
-  @ViewChild(ForecastLoaderComponent)
-  loader!: ForecastLoaderComponent;
-
-  constructor(forecastRetriever: ForecastRetrieverService, viewContainer: ViewContainerRef) {
+  constructor(forecastRetriever: ForecastRetrieverService) {
     this.forecastRetriever = forecastRetriever;
-    this.viewContainer = viewContainer;
   }
 
   ngAfterViewInit() {
@@ -50,6 +48,11 @@ export class ForecastComponent {
   }
 
   loadForecast(location: GeolocationPosition) {
-    this.loader.loadForecast(location);
+    let locationRequest: Observable<NWSLocation> = this.forecastRetriever.retrieveForecastUrl(location.coords.latitude, location.coords.longitude);
+    locationRequest.subscribe(response => {
+      this.forecastRetriever.retrieveForecast(response).subscribe((response) => {
+        this.forecast = response;
+      });
+    });
   }
 }
