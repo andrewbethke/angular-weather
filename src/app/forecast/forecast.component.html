@@ -1,6 +1,6 @@
 <main>
     <noscript>To use this application, Javascript must be enabled.</noscript>
-    <app-forecast-error [messenger]="error.asObservable()" ></app-forecast-error>
+    <app-forecast-error [message]="error"></app-forecast-error>
     <ol>
         <li *ngFor="let period of forecast.properties.periods">
             <app-forecast-card [period]="period"></app-forecast-card>
