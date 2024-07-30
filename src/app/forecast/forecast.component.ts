@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { ForecastErrorComponent } from './forecast-error/forecast-error.component';
 import { ForecastRetrieverService } from './forecast-retriever.service';
 import { Observable } from 'rxjs';
@@ -14,12 +14,19 @@ import { NgFor } from '@angular/common';
   styleUrl: './forecast.component.scss'
 })
 export class ForecastComponent {
-  error: string = "";
   forecastRetriever: ForecastRetrieverService;
+  element: ElementRef;
+  
+  error: string = "";
   forecast: NWSForecast = new NWSForecast();
 
-  constructor(forecastRetriever: ForecastRetrieverService) {
+  @HostListener("wheel", ["$event"]) onScroll(event: WheelEvent) {
+    this.element.nativeElement.children[0].scrollBy(event.deltaY, 0);
+  }
+
+  constructor(forecastRetriever: ForecastRetrieverService, element: ElementRef) {
     this.forecastRetriever = forecastRetriever;
+    this.element = element;
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.loadForecast.bind(this), this.handleGeolocationError.bind(this));
     } else {
