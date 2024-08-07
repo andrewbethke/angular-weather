@@ -1,8 +1,9 @@
 div {
+    min-width: 20rem;
     width: 20vw;
-    height: 50vh;
+    height: auto;
     background-color: white;
-    padding: 2em;
+    padding: 2.5em;
     border-radius: 2em;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
@@ -36,4 +37,11 @@ p {
 .wind {
     font-size: 2rem;
     text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    div {
+        width: 80vw;
+        height: auto;
+    }
 }
