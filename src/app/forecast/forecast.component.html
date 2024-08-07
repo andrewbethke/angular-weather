@@ -1,9 +1,11 @@
 <main>
     <noscript>To use this application, Javascript must be enabled.</noscript>
-    <app-forecast-error [message]="error"></app-forecast-error>
-    <ol>
+    <ol *ngIf="!error else errorBox">
         <li *ngFor="let period of forecast.properties.periods">
             <app-forecast-card [period]="period"></app-forecast-card>
         </li>
     </ol>
+    <ng-template #errorBox>
+        <app-forecast-error [message]="error"></app-forecast-error>
+    </ng-template>
 </main>

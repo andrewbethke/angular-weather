@@ -4,12 +4,12 @@ import { ForecastRetrieverService } from './forecast-retriever.service';
 import { Observable } from 'rxjs';
 import { NWSForecast, NWSLocation } from './forecast.classes';
 import { ForecastCardComponent } from './forecast-card/forecast-card.component';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-forecast',
   standalone: true,
-  imports: [ForecastErrorComponent, ForecastCardComponent, NgFor],
+  imports: [ForecastErrorComponent, ForecastCardComponent, NgFor, NgIf],
   templateUrl: './forecast.component.html',
   styleUrl: './forecast.component.scss'
 })
