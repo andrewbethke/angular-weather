@@ -2,9 +2,13 @@
 $header-fonts: "Source Serif 4", "Times New Roman", serif;
 $body-fonts: "Open Sans", Arial, Helvetica, sans-serif;
 
-html, *, *::before, *::after {
+*, *::before, *::after {
     box-sizing: border-box;
     position: relative;
+}
+    
+html {
+    overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {

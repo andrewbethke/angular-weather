@@ -9,11 +9,13 @@ div {
 }
 
 .daytime {
-    background-color: skyblue;
+  background: rgba(63,161,221,1);
+  background: linear-gradient(135deg, rgba(63,161,221,1) 0%, rgba(135,206,235,1) 100%);
 }
 
 .nighttime {
-    background-color: darkblue;
+    background: rgb(0,0,64);
+    background: linear-gradient(-45deg, rgba(0,0,64,1) 0%, rgba(0,0,139,1) 100%);
     color: white;
 }
 
