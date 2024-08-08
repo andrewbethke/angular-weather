@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NWSForecastPeriod } from '../forecast.classes';
+import { NWSForecastPeriod } from '../forecast-service/forecast.classes';
 import { NgClass, NgIf } from '@angular/common';
 
 @Component({

@@ -1,9 +1,9 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
-import { ForecastErrorComponent } from './forecast-error/forecast-error.component';
-import { ForecastRetrieverService } from './forecast-retriever.service';
+import { ForecastErrorComponent } from '../forecast-error/forecast-error.component';
+import { ForecastRetrieverService } from '../forecast-service/forecast-retriever.service';
 import { Observable } from 'rxjs';
-import { NWSForecast, NWSLocation } from './forecast.classes';
-import { ForecastCardComponent } from './forecast-card/forecast-card.component';
+import { NWSForecast, NWSLocation } from '../forecast-service/forecast.classes';
+import { ForecastCardComponent } from '../forecast-card/forecast-card.component';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
