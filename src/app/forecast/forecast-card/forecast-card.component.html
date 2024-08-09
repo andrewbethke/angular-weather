@@ -1,9 +1,11 @@
 <div [ngClass]="{'daytime': period.isDaytime, 'nighttime': !period.isDaytime}">
     <h2>{{period.name}}</h2>
     <p class="temperature">{{cToF(period.temperature.value)}}&deg;</p>
-    <p class="wind" *ngIf="period.windSpeed.value != null else windRange">{{kmToMiles(period.windSpeed.value)}} mph {{period.windDirection}}</p>
+    
+    <p class="wind" *ngIf="period.windSpeed.value != null else windRange">Wind: {{kmToMiles(period.windSpeed.value)}} mph {{period.windDirection}}</p>
     <ng-template #windRange>
-        <p class="wind">{{kmToMiles(period.windSpeed.minValue)}}–{{kmToMiles(period.windSpeed.maxValue)}} mph {{period.windDirection}}</p>
+        <p class="wind">Wind: {{kmToMiles(period.windSpeed.minValue)}}–{{kmToMiles(period.windSpeed.maxValue)}} mph {{period.windDirection}}</p>
     </ng-template>
+
     <p>{{period.shortForecast}}</p>
 </div>
