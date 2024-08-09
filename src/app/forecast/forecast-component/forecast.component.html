@@ -1,7 +1,7 @@
 <main>
     <noscript>To use this application, Javascript must be enabled.</noscript>
     <ol *ngIf="!error else errorBox">
-        <li *ngFor="let period of forecast.properties.periods">
+        <li *ngFor="let period of forecastRetriever.forecast.properties.periods">
             <app-forecast-card [period]="period"></app-forecast-card>
         </li>
     </ol>

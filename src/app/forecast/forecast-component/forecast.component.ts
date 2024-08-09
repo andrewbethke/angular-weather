@@ -53,10 +53,23 @@ export class ForecastComponent {
 
   loadForecast(location: GeolocationPosition) {
     let locationRequest: Observable<NWSLocation> = this.forecastRetriever.retrieveForecastUrl(location.coords.latitude, location.coords.longitude);
-    locationRequest.subscribe(response => {
-      this.forecastRetriever.retrieveForecast(response).subscribe((response) => {
-        this.forecast = response;
-      });
-    });
+    locationRequest.subscribe(
+      {
+        // If getting the forecast URL is successful, all we need to do here is set up error handling for getting the forecast being unsucessful.
+        next: response => {
+          this.forecastRetriever.retrieveForecast(response).subscribe(
+            {
+              error: () => {
+                this.error = "Your location is covered by the National Weather Service and should have a forecast available, but it could not be retrieved. Please try again later.";
+              }
+            }
+          );
+        },
+        // If the forecast URL could not be retrieved for the location, it's probably outside the US and the user should get an error message explaining that.
+        error: () => {
+          this.error = "The forecast could not be retrieved for this location. If you're outside the United States, that is to be expected, as the National Weather Service does not provide worldwide forecasts. If you're in the United States, please try again later.";
+        }
+      }
+    );
   }
 }
