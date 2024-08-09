@@ -1,10 +1,10 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { ForecastErrorComponent } from '../forecast-error/forecast-error.component';
 import { ForecastRetrieverService } from '../forecast-service/forecast-retriever.service';
 import { Observable } from 'rxjs';
 import { NWSForecast, NWSLocation } from '../forecast-service/forecast.classes';
 import { ForecastCardComponent } from '../forecast-card/forecast-card.component';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-forecast',
@@ -24,13 +24,16 @@ export class ForecastComponent {
     this.element.nativeElement.children[0].scrollBy(event.deltaY, 0);
   }
 
-  constructor(forecastRetriever: ForecastRetrieverService, element: ElementRef) {
+  constructor(forecastRetriever: ForecastRetrieverService, element: ElementRef, @Inject(PLATFORM_ID) platform: Object) {
     this.forecastRetriever = forecastRetriever;
     this.element = element;
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.loadForecast.bind(this), this.handleGeolocationError.bind(this));
-    } else {
-      this.error = "Your browser does not support geolocation, which is required for this application. Try a more modern browser.";
+    // We can only use navigator on the client, so we need to check that this is running on the client.
+    if (isPlatformBrowser(platform)){
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.loadForecast.bind(this), this.handleGeolocationError.bind(this));
+      } else {
+        this.error = "Your browser does not support geolocation, which is required for this application. Try a more modern browser.";
+      }
     }
   }
 
