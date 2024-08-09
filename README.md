@@ -6,4 +6,4 @@ I originally started working on this several months ago, then forgot about it. W
 
 If you want to take something from this project, go ahead! It is licensed under the MIT license.
 
-A mirror of this repository is hosted at [https://weather.andrewbethke.me].
+A build of this repository is hosted at https://weather.andrewbethke.me.
